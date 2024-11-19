@@ -1,39 +1,46 @@
 #pragma once
-#include <SDL.h>
-#include<SDL_image.h>
-#include <iostream>
-#include <string>
+#include "Graphics.h"
+#include "AnimatedTexture.h"
+#include "InputManager.h"
+#include "AudioManager.h"
 
 namespace SDLFramework {
-	class Graphics {
+	class GameManager {
 	public:
-		static const int SCREEN_WIDTH = 600;
-		static const int SCREEN_HEIGHT = 800;
-
-		static Graphics* Instance();
-		//Handle releasing (uninitializing) memory. ONLY HANDLES OUR WINDOW AND RENDERER
+		static GameManager* Instance();
 		static void Release();
-		static bool Initialized();
 
-		SDL_Texture* LoadTexture(std::string path);
+		GameManager();
+		~GameManager();
 
-		void DrawTexture(SDL_Texture* texture, SDL_Rect* srcRect = nullptr, SDL_Rect* dst_Rect = nullptr,
-			float angle = 0.0f, SDL_RendererFlip flip = SDL_FLIP_NONE);
+		void Update();
+		void LateUpdate();
 
-		//Cleanup that happens to the area in memory that draws the next frame
-		void ClearBackBuffer();
 		void Render();
 
-		Graphics();
-		~Graphics();
-
-		bool Init();
+		void Run();
 
 	private:
-		//This is going to hold the ONE instance of our Graphics class
-		static Graphics* sInstance;
-		static bool sInitialized;
-		SDL_Window* mWindow = nullptr;
-		SDL_Renderer* mRenderer = nullptr;
+		const int FRAME_RATE = 60;
+		//How we are creating this as a Singleton
+		static GameManager* sInstance;
+		//Loop Control
+		bool mQuit;
+
+		//Modules (aka singletons
+		Graphics* mGraphics;
+		Timer* mTimer;
+		AssetManager* mAssetManager;
+		InputManager* mInputManager;
+		AudioManager* mAudioManager;
+
+		//Sanity Testing Varaibles
+		GameEntity* mParent;
+		GameEntity* mChild;
+
+		Texture* mFontTex;
+		AnimatedTexture* mTex;
+
+		SDL_Event mEvents;
 	};
 }

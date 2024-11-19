@@ -30,6 +30,18 @@ namespace SDLFramework {
 		mSourceRect.h = height;
 	}
 
+	Texture::Texture(std::string text, std::string fontPath, int size, SDL_Color color, bool managed) {
+		mGraphics = Graphics::Instance();
+		mTex = AssetManager::Instance()->GetText(text, fontPath, size, color, managed);
+
+		mClipped = false;
+
+		SDL_QueryTexture(mTex, nullptr, nullptr, &mWidth, &mHeight);
+
+		mDestinationRect.w = mWidth;
+		mDestinationRect.h = mHeight;
+	}
+
 	Texture::~Texture() {
 		AssetManager::Instance()->DestroyTexture(mTex);
 		mTex = nullptr;

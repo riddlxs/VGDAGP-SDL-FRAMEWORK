@@ -1,10 +1,8 @@
 #pragma once
-#pragma once
 #include "Graphics.h"
-#include "Timer.h"
-#include "GameEntity.h"
-#include "Texture.h"
+#include "AnimatedTexture.h"
 #include "InputManager.h"
+#include "AudioManager.h"
 
 namespace SDLFramework {
 	class GameManager {
@@ -34,12 +32,14 @@ namespace SDLFramework {
 		Timer* mTimer;
 		AssetManager* mAssetManager;
 		InputManager* mInputManager;
+		AudioManager* mAudioManager;
 
 		//Sanity Testing Varaibles
 		GameEntity* mParent;
 		GameEntity* mChild;
 
-		Texture* mTex;
+		Texture* mFontTex;
+		AnimatedTexture* mTex;
 
 		SDL_Event mEvents;
 	};
