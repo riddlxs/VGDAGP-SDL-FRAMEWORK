@@ -1,6 +1,7 @@
 #pragma once
 #include <SDL.h>
-#include <SDL_image.h>
+#include<SDL_image.h>
+#include<SDL_ttf.h>
 #include <iostream>
 #include <string>
 
@@ -19,6 +20,8 @@ namespace SDLFramework {
 
 		void DrawTexture(SDL_Texture* texture, SDL_Rect* srcRect = nullptr, SDL_Rect* dst_Rect = nullptr,
 			float angle = 0.0f, SDL_RendererFlip flip = SDL_FLIP_NONE);
+
+		SDL_Texture* CreateTextTexture(TTF_Font* font, std::string text, SDL_Color color);
 
 		//Cleanup that happens to the area in memory that draws the next frame
 		void ClearBackBuffer();
