@@ -44,45 +44,30 @@ namespace SDLFramework {
         mInputManager->Update();
 
         if (mInputManager->KeyDown(SDL_SCANCODE_W)) {
-            mTex->Translate(Vector2(0, -40.0f) * mTimer->DeltaTime(), GameEntity::World);
+
         }
         else if (mInputManager->KeyDown(SDL_SCANCODE_S)) {
-            mTex->Translate(Vector2(0, 40.0f) * mTimer->DeltaTime(), GameEntity::World);
+
         }
         //To prevent diagonal movement, add an else to the if statement below
         if (mInputManager->KeyDown(SDL_SCANCODE_A)) {
-            mTex->Translate(Vector2(-40.0f, 0.0f) * mTimer->DeltaTime(), GameEntity::World);
+
         }
         else if (mInputManager->KeyDown(SDL_SCANCODE_D)) {
-            mTex->Translate(Vector2(40.0f, 0.0f) * mTimer->DeltaTime(), GameEntity::World);
+
         }
 
-        //TODO:
-        //Setup rotation using the Q and E keys
-        //Setup scaling the texture using the Z and C keys
-        //Setup a second set of movement (ie arrow keys/IJKL) for the second texture
-
         if (mInputManager->KeyPressed(SDL_SCANCODE_SPACE)) {
-            //std::cout << "Space key pressed!" << std::endl;
-            mAudioManager->PlaySFX("Audio/SFX/coin_credit.wav", 0, -1);
+
         }
 
         if (mInputManager->KeyReleased(SDL_SCANCODE_SPACE)) {
-            std::cout << "Space key released!" << std::endl;
-        }
 
-        if (mInputManager->MouseButtonPressed(InputManager::Left)) {
-            std::cout << "Left Mouse button pressed!" << std::endl;
         }
-
-        if (mInputManager->MouseButtonReleased(InputManager::Left)) {
-            std::cout << "Left Mouse button released!" << std::endl;
-        }
-
-        mTex->Update();
     }
 
     void GameManager::LateUpdate() {
+        mPhysicsManager->Update();
         mInputManager->UpdatePrevInput();
     }
 
@@ -90,8 +75,6 @@ namespace SDLFramework {
         //This is the old frame we need to clear
         mGraphics->ClearBackBuffer();
 
-        mTex->Render();
-        mFontTex->Render();
 
         //Actually showing everthing that we have told to render
         mGraphics->Render();
@@ -110,23 +93,22 @@ namespace SDLFramework {
         mAssetManager = AssetManager::Instance();
         mInputManager = InputManager::Instance();
         mAudioManager = AudioManager::Instance();
+        mPhysicsManager = PhysicsManager::Instance();
 
-        mTex = new AnimatedTexture("SpriteSheet.png", 204, 45, 40, 38, 4, 0.5f, AnimatedTexture::Horizontal);
-        mTex->Scale(Vector2(1.5f, 1.5f));
+        //Create my Physics Layers
+        mPhysicsManager->SetLayerCollisionMask(PhysicsManager::CollisionLayers::Friendly,
+            PhysicsManager::CollisionFlags::Hostile |
+            PhysicsManager::CollisionFlags::HostileProjectile);
 
-        mTex->Position(Vector2(Graphics::SCREEN_WIDTH * 0.49f, Graphics::SCREEN_HEIGHT * 0.5f));
+        mPhysicsManager->SetLayerCollisionMask(PhysicsManager::CollisionLayers::Hostile,
+            PhysicsManager::CollisionFlags::Friendly |
+            PhysicsManager::CollisionFlags::FriendlyProjectile);
 
-        mFontTex = new Texture("Hello World!", "ARCADE.TTF", 72, { 255, 0, 0 });
-        mFontTex->Position(Vector2(400, 200));
+        //Creating GameObjects
     }
 
     GameManager::~GameManager() {
         //Release Variables
-        delete mTex;
-        mTex = nullptr;
-
-        delete mFontTex;
-        mFontTex = nullptr;
 
         //Release Modules
         Graphics::Release();
@@ -143,6 +125,9 @@ namespace SDLFramework {
 
         AudioManager::Release();
         mAudioManager = nullptr;
+
+        PhysicsManager::Release();
+        mPhysicsManager = nullptr;
 
         //Quit SDl Subsystems
         SDL_Quit();

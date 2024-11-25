@@ -64,4 +64,4 @@ namespace SDLFramework {
 		Mix_CloseAudio();
 		Mix_Quit();
 	}
-}}
+}
