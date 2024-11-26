@@ -6,6 +6,7 @@ BackgroundStars* BackgroundStars::Instance() {
 	if (sInstance == nullptr) {
 		sInstance = new BackgroundStars();
 	}
+
 	return sInstance;
 }
 
@@ -15,6 +16,7 @@ void BackgroundStars::Release() {
 }
 
 void BackgroundStars::Scroll(bool scroll) {
+
 	Star::Scroll(scroll);
 }
 
@@ -30,7 +32,7 @@ void BackgroundStars::Render() {
 	}
 }
 
-BackgroundStars::BackgroundStars() {
+BackgroundStars::~BackgroundStars() {
 	for (auto layer : mLayers) {
 		delete layer;
 		layer = nullptr;
@@ -40,6 +42,5 @@ BackgroundStars::BackgroundStars() {
 BackgroundStars::BackgroundStars() {
 	for (int i = 0; i < LAYER_COUNT; i++) {
 		mLayers[i] = new StarLayer(i);
-
 	}
 }

@@ -2,10 +2,20 @@
 #include "StarLayer.h"
 
 class BackgroundStars {
-
-private:
-	static BackgroundStars* sInstance;
+public:
+	static BackgroundStars* Instance();
 	static void Release();
 
-	void 
+	void Scroll(bool scroll);
+
+	void Update();
+	void Render();
+
+private:
+	BackgroundStars();
+	~BackgroundStars();
+
+	static BackgroundStars* sInstance;
+	static const int LAYER_COUNT = 3;
+	StarLayer* mLayers[LAYER_COUNT];
 };

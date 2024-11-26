@@ -1,8 +1,9 @@
 #pragma once
 #include "Graphics.h"
-#include "AnimatedTexture.h"
-#include "InputManager.h"
 #include "AudioManager.h"
+#include "PhysicsManager.h"
+#include "StartScreen.h"
+#include "BackgroundStars.h"
 
 namespace SDLFramework {
 	class GameManager {
@@ -27,19 +28,18 @@ namespace SDLFramework {
 		//Loop Control
 		bool mQuit;
 
-		//Modules (aka singletons
+		//Modules (aka singletons)
 		Graphics* mGraphics;
 		Timer* mTimer;
 		AssetManager* mAssetManager;
 		InputManager* mInputManager;
 		AudioManager* mAudioManager;
+		PhysicsManager* mPhysicsManager;
+		BackgroundStars* mBackgroundStars;
 
-		//Sanity Testing Varaibles
-		GameEntity* mParent;
-		GameEntity* mChild;
 
-		Texture* mFontTex;
-		AnimatedTexture* mTex;
+		//Screens
+		StartScreen* mStartScreen;
 
 		SDL_Event mEvents;
 	};

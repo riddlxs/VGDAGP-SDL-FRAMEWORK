@@ -165,6 +165,7 @@ xcopy "$(ProjectDir)\Assets\*" "$(OutDir)Assets\" /y /s</Command>
     <ClCompile Include="PhysEntity.cpp" />
     <ClCompile Include="PhysicsManager.cpp" />
     <ClCompile Include="Random.cpp" />
+    <ClCompile Include="Scoreboard.cpp" />
     <ClCompile Include="Star.cpp" />
     <ClCompile Include="StarLayer.cpp" />
     <ClCompile Include="StartScreen.cpp" />
@@ -189,6 +190,7 @@ xcopy "$(ProjectDir)\Assets\*" "$(OutDir)Assets\" /y /s</Command>
     <ClInclude Include="PhysicsHelper.h" />
     <ClInclude Include="PhysicsManager.h" />
     <ClInclude Include="Random.h" />
+    <ClInclude Include="Scoreboard.h" />
     <ClInclude Include="Star.h" />
     <ClInclude Include="StarLayer.h" />
     <ClInclude Include="StartScreen.h" />

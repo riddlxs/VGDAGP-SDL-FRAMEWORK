@@ -43,6 +43,9 @@ namespace SDLFramework {
     void GameManager::Update() {
         mInputManager->Update();
 
+        mStartScreen->Update();
+        mBackgroundStars->Update();
+
         if (mInputManager->KeyDown(SDL_SCANCODE_W)) {
 
         }
@@ -74,7 +77,8 @@ namespace SDLFramework {
     void GameManager::Render() {
         //This is the old frame we need to clear
         mGraphics->ClearBackBuffer();
-
+        mBackgroundStars->Render();
+        mStartScreen->Render();
 
         //Actually showing everthing that we have told to render
         mGraphics->Render();
@@ -94,6 +98,7 @@ namespace SDLFramework {
         mInputManager = InputManager::Instance();
         mAudioManager = AudioManager::Instance();
         mPhysicsManager = PhysicsManager::Instance();
+        mBackgroundStars = BackgroundStars::Instance();
 
         //Create my Physics Layers
         mPhysicsManager->SetLayerCollisionMask(PhysicsManager::CollisionLayers::Friendly,
@@ -104,11 +109,17 @@ namespace SDLFramework {
             PhysicsManager::CollisionFlags::Friendly |
             PhysicsManager::CollisionFlags::FriendlyProjectile);
 
+        //Creating Screens
+        mStartScreen = new StartScreen();
+
         //Creating GameObjects
+
     }
 
     GameManager::~GameManager() {
         //Release Variables
+        delete mStartScreen;
+        mStartScreen = nullptr;
 
         //Release Modules
         Graphics::Release();
@@ -128,6 +139,9 @@ namespace SDLFramework {
 
         PhysicsManager::Release();
         mPhysicsManager = nullptr;
+
+        BackgroundStars::Release();
+        mBackgroundStars = nullptr;
 
         //Quit SDl Subsystems
         SDL_Quit();

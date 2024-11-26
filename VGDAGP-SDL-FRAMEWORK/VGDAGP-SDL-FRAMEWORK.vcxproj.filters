@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\Galaga_H">
+      <UniqueIdentifier>{648f02b3-4b98-46b1-b9e5-4c4fdcde6e40}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Galaga_CPP">
+      <UniqueIdentifier>{c8f9dade-b2a6-4da9-b269-2e8241cd3a48}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="VGDAGP-SDL-FRAMEWORK.cpp">
@@ -61,28 +67,25 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="BackgroundStars.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Star.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Header Files\Galaga_CPP</Filter>
     </ClCompile>
     <ClCompile Include="Random.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Header Files\Galaga_CPP</Filter>
     </ClCompile>
-    <ClCompile Include="StarLayer.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Star.cpp">
+      <Filter>Header Files\Galaga_CPP</Filter>
     </ClCompile>
     <ClCompile Include="StartScreen.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Header Files\Galaga_CPP</Filter>
+    </ClCompile>
+    <ClCompile Include="StarLayer.cpp">
+      <Filter>Header Files\Galaga_CPP</Filter>
+    </ClCompile>
+    <ClCompile Include="Scoreboard.cpp">
+      <Filter>Header Files\Galaga_CPP</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Graphics.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="AnimatedTexture.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="AssetManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -126,18 +129,27 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="BackgroundStars.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Galaga_H</Filter>
     </ClInclude>
     <ClInclude Include="Random.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Galaga_H</Filter>
     </ClInclude>
     <ClInclude Include="Star.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="StarLayer.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Galaga_H</Filter>
     </ClInclude>
     <ClInclude Include="StartScreen.h">
+      <Filter>Header Files\Galaga_H</Filter>
+    </ClInclude>
+    <ClInclude Include="StarLayer.h">
+      <Filter>Header Files\Galaga_H</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimatedTexture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Scoreboard.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
