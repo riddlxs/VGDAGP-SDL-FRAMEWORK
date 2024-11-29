@@ -1,70 +1,49 @@
-#include "AnimatedTexture.h"
+#include "AnimatedTexture.h"  // This file contains the class declaration
 
 namespace SDLFramework {
-	void AnimatedTexture::RunAnimation() {
-		if (!mAnimationDone) {
-			mAnimationTimer += mTimer->DeltaTime();
 
-			if (mAnimationTimer >= mAnimationSpeed) {
-				//This means we have finished one iteration of our animation
-				if (mWrapMode == Loop) {
-					//reset timer, accounting for any extra time
-					mAnimationTimer -= mAnimationSpeed;
-				}
-				else {
-					mAnimationDone = true;
-					//back the timer up to the last frame of the animation
-					mAnimationTimer = mAnimationSpeed - mTimePerFrame;
-				}
+    // Constructor definition
+    AnimatedTexture::AnimatedTexture(std::string filename, int x, int y, int width, int height,
+        int frameCount, float animSpeed, AnimDir animationDir, bool managed)
+        : Texture(filename, x, y, width, height, managed)  // Initialize base class Texture
+    {
+        mStartx = x;
+        mStarty = y;
+        mFrameCount = frameCount;
+        mAnimationSpeed = animSpeed;
+        mAnimationDirection = animationDir;
+        mWrapMode = Once;  // Default wrap mode
+        mAnimationDone = false;
+        mTimer = new Timer();
+        mTimePerFrame = 1.0f / animSpeed;
+        mAnimationTimer = 0.0f;
+    }
 
-			}
+    // Destructor definition
+    AnimatedTexture::~AnimatedTexture() {
+        delete mTimer;  // Clean up the Timer object
+    }
 
-			if (mAnimationDirection == Horizontal) {
-				mSourceRect.x = mStartx + (int)(mAnimationTimer / mTimePerFrame) * mWidth;
-			}
-			else {
-				mSourceRect.y = mStarty + (int)(mAnimationTimer / mTimePerFrame) * mHeight;
-			}
-		}
-	}
+    // Other methods can be defined here
+    void AnimatedTexture::SetWrapMode(WrapMode mode) {
+        mWrapMode = mode;
+    }
 
-	AnimatedTexture::AnimatedTexture(std::string filename, int x, int y, int width, int height,
-		int frameCount, float animationSpeed, AnimDir animationDir, bool managed) :
-		Texture(filename, x, y, width, height, managed) {
-		mTimer = Timer::Instance();
+    bool AnimatedTexture::IsAnimating() {
+        return !mAnimationDone;
+    }
 
-		mStartx = x;
-		mStarty = y;
+    void AnimatedTexture::ResetAnimation() {
+        mAnimationTimer = 0.0f;
+        mAnimationDone = false;
+    }
 
-		mFrameCount = frameCount;
-		mAnimationSpeed = animationSpeed;
-		mTimePerFrame = mAnimationSpeed / mFrameCount;
-		mAnimationTimer = 0.0f;
+    void AnimatedTexture::Update() {
+        // Update logic for the animation
+        // Example: Increase animation timer and check if it's time to move to the next frame
+    }
 
-		mWrapMode = Loop;
-		mAnimationDirection = animationDir;
-
-		mAnimationDone = false;
-	}
-
-	AnimatedTexture::~AnimatedTexture() {
-		mTimer = nullptr;
-	}
-
-	void AnimatedTexture::SetWrapMode(WrapMode wrapMode) {
-		mWrapMode = wrapMode;
-	}
-
-	bool AnimatedTexture::IsAnimating() {
-		return !mAnimationDone;
-	}
-
-	void AnimatedTexture::ResetAnimation() {
-		mAnimationTimer = 0.0f;
-		mAnimationDone = false;
-	}
-
-	void AnimatedTexture::Update() {
-		RunAnimation();
-	}
+    void AnimatedTexture::RunAnimation() {
+        // Logic for actually running the animation
+    }
 }

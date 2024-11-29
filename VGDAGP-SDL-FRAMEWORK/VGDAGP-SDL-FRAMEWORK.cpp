@@ -1,3 +1,5 @@
+#define SDL_MAIN_HANDLED
+#include <SDL.h>
 #include "GameManager.h"
 
 using SDLFramework::GameManager;

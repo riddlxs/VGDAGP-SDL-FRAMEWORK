@@ -1,6 +1,7 @@
 #pragma once
 #include "AnimatedTexture.h"
 #include "InputManager.h"
+#include "Scoreboard.h"
 
 using namespace SDLFramework;
 
@@ -10,6 +11,10 @@ public:
 	~StartScreen();
 
 	void ChangeSelectedMode(int change);
+
+	void ResetAnimation();
+
+	int SelectedMode();
 
 	void Update() override;
 	void Render() override;
@@ -32,6 +37,9 @@ private:
 	Texture* mPlayerOne;
 	Texture* mPlayerTwo;
 	Texture* mHiScore;
+	Scoreboard* mPlayerOneScore;
+	Scoreboard* mPlayerTwoScore;
+	Scoreboard* mTopScore;
 
 	//Logo Entities
 	GameEntity* mLogoHolder;

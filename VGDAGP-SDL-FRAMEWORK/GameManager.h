@@ -2,8 +2,7 @@
 #include "Graphics.h"
 #include "AudioManager.h"
 #include "PhysicsManager.h"
-#include "StartScreen.h"
-#include "BackgroundStars.h"
+#include "ScreenManager.h"
 
 namespace SDLFramework {
 	class GameManager {
@@ -35,11 +34,7 @@ namespace SDLFramework {
 		InputManager* mInputManager;
 		AudioManager* mAudioManager;
 		PhysicsManager* mPhysicsManager;
-		BackgroundStars* mBackgroundStars;
-
-
-		//Screens
-		StartScreen* mStartScreen;
+		ScreenManager* mScreenManager;
 
 		SDL_Event mEvents;
 	};

@@ -3,91 +3,102 @@
 #include "PhysicsHelper.h"
 
 namespace SDLFramework {
-	void PhysEntity::AddCollider(Collider* collider, Vector2 localPos) {
-		collider->Parent(this);
-		collider->Position(localPos);
-		mColliders.push_back(collider);
 
-		if (mColliders.size() > 1 || mColliders[0]->GetType() != Collider::ColliderType::Circle) {
-			float furthestDistance = mColliders[0]->GetFurthestPoint().Magnitude();
-			float dist = 0.0f;
+    // Constructor: Initializes variables
+    PhysEntity::PhysEntity() {
+        mBroadPhaseCollider = nullptr;
+        mId = 0;
+    }
 
-			for (int i = 1; i < mColliders.size(); i++) {
-				dist = mColliders[i]->GetFurthestPoint().Magnitude();
+    // Destructor: Cleans up colliders and broad-phase collider
+    PhysEntity::~PhysEntity() {
+        for (auto collider : mColliders) {
+            delete collider;
+        }
+        mColliders.clear();
 
-				if (dist > furthestDistance) {
-					furthestDistance = dist;
-				}
-			}
+        delete mBroadPhaseCollider;
+        mBroadPhaseCollider = nullptr;
 
-			delete mBroadPhaseCollider;
-			mBroadPhaseCollider = new CircleCollider(furthestDistance, true);
-			mBroadPhaseCollider->Parent(this);
-			mBroadPhaseCollider->Position(Vec2_Zero);
-		}
-	}
+        if (mId != 0) {
+            PhysicsManager::Instance()->UnregisterEntity(mId);
+        }
+    }
 
-	PhysEntity::PhysEntity() {
-		mBroadPhaseCollider = nullptr;
-		mId = 0;
-	}
+    // Add a collider to the entity
+    void PhysEntity::AddCollider(Collider* collider, Vector2 localPos) {
+        collider->Parent(this);           // Associate the collider with this entity
+        collider->Position(localPos);     // Set the local position for the collider
+        mColliders.push_back(collider);   // Add the collider to the entity's list of colliders
 
-	PhysEntity::~PhysEntity() {
-		for (auto colliders : mColliders) {
-			delete colliders;
-			colliders = nullptr;
-		}
-		mColliders.clear();
+        // Update the broad-phase collider based on the furthest distance of all colliders
+        if (mColliders.size() > 1 || mColliders[0]->GetType() != Collider::ColliderType::Circle) {
+            float furthestDistance = mColliders[0]->GetFurthestPoint().Magnitude();
+            float dist = 0.0f;
 
-		delete mBroadPhaseCollider;
-		mBroadPhaseCollider = nullptr;
+            // Loop through all colliders to find the furthest point
+            for (int i = 1; i < mColliders.size(); i++) {
+                dist = mColliders[i]->GetFurthestPoint().Magnitude();
 
-		if (mId != 0) {
-			PhysicsManager::Instance()->UnregisterEntity(mId);
-		}
-	}
+                if (dist > furthestDistance) {
+                    furthestDistance = dist;
+                }
+            }
 
-	unsigned long PhysEntity::GetId() {
-		return mId;
-	}
+            // Delete the old broad-phase collider and create a new one
+            delete mBroadPhaseCollider;
+            mBroadPhaseCollider = new CircleCollider(furthestDistance, true);
+            mBroadPhaseCollider->Parent(this);
+            mBroadPhaseCollider->Position(Vec2_Zero); // Reset position to (0, 0) or calculate based on entity position
+        }
+    }
 
-	bool PhysEntity::IgnoreCollisions() {
-		return false;
-	}
+    // Get the entity's ID
+    unsigned long PhysEntity::GetId() {
+        return mId;
+    }
 
-	void PhysEntity::Render() {
-		for (auto colliders : mColliders) {
-			colliders->Render();
-		}
+    // Collision check: If this entity ignores collisions, return false
+    bool PhysEntity::IgnoreCollisions() {
+        return false;
+    }
 
-		if (mBroadPhaseCollider) {
-			mBroadPhaseCollider->Render();
-		}
-	}
+    // Render the entity and its colliders
+    void PhysEntity::Render() {
+        for (auto collider : mColliders) {
+            collider->Render();
+        }
 
-	bool PhysEntity::CheckCollision(PhysEntity* other) {
-		if (IgnoreCollisions() || other->IgnoreCollisions()) {
-			//returning early because at least one of us is ignoring collisions rn
-			return false;
-		}
+        if (mBroadPhaseCollider) {
+            mBroadPhaseCollider->Render();
+        }
+    }
 
-		bool narrowPhaseCheck = false;
+    // Check if this entity collides with another PhysEntity
+    bool PhysEntity::CheckCollision(PhysEntity* other) {
+        if (IgnoreCollisions() || other->IgnoreCollisions()) {
+            return false; // Early exit if one of the entities ignores collisions
+        }
 
-		if (mBroadPhaseCollider && other->mBroadPhaseCollider) {
-			narrowPhaseCheck = ColliderVsColliderCheck(mBroadPhaseCollider, other->mBroadPhaseCollider);
-		}
+        bool narrowPhaseCheck = false;
 
-		if (narrowPhaseCheck) {
-			for (int i = 0; i < mColliders.size(); i++) {
-				for (int j = 0; j < other->mColliders.size(); j++) {
-					if (ColliderVsColliderCheck(mColliders[i], other->mColliders[j])) {
-						//A collision has happened!
-						return true;
-					}
-				}
-			}
-		}
+        // Perform broad-phase collision check using the broad-phase colliders
+        if (mBroadPhaseCollider && other->mBroadPhaseCollider) {
+            narrowPhaseCheck = ColliderVsColliderCheck(mBroadPhaseCollider, other->mBroadPhaseCollider);
+        }
 
-		return false;
-	}
+        // If broad-phase collision passed, check narrow-phase collisions
+        if (narrowPhaseCheck) {
+            for (int i = 0; i < mColliders.size(); i++) {
+                for (int j = 0; j < other->mColliders.size(); j++) {
+                    if (ColliderVsColliderCheck(mColliders[i], other->mColliders[j])) {
+                        return true; // A collision has been detected
+                    }
+                }
+            }
+        }
+
+        return false; // No collision detected
+    }
+
 }

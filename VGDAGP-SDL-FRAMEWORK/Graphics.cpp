@@ -1,5 +1,6 @@
 #include "Graphics.h"
 
+
 namespace SDLFramework {
 	//This is how we initialize static members in a class
 	//Specifically ones that we do NOT want to be constants!!
@@ -106,7 +107,7 @@ namespace SDLFramework {
 		}
 
 		mWindow = SDL_CreateWindow(
-			"SDL Tutorial",
+			WINDOW_TITLE,
 			SDL_WINDOWPOS_UNDEFINED,
 			SDL_WINDOWPOS_UNDEFINED,
 			SCREEN_WIDTH,
@@ -127,6 +128,9 @@ namespace SDLFramework {
 			std::cerr << "Unable to get renderer. SDL_Error: " << SDL_GetError() << std::endl;
 			return false;
 		}
+
+		//Uncomment the below line to change the background to white for position testing
+		//SDL_SetRenderDrawColor(mRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
 
 		if (TTF_Init() == -1) {
 			std::cerr << "Unable to initialize SDL_ttf! TTF Error " << TTF_GetError() << std::endl;

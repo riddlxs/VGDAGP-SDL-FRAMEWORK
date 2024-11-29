@@ -5,7 +5,12 @@
 namespace SDLFramework {
 	//Base class for any object we want to have colliders
 	class PhysEntity : public GameEntity {
+
+	private: 
+		int mLayer;
+
 	public:
+
 		PhysEntity();
 		virtual ~PhysEntity();
 
@@ -13,7 +18,7 @@ namespace SDLFramework {
 
 		bool CheckCollision(PhysEntity* other);
 
-		virtual void Hit(PhysEntity* other);
+		virtual void Hit(PhysEntity* other){} //create cout
 
 		virtual void Render() override;
 
