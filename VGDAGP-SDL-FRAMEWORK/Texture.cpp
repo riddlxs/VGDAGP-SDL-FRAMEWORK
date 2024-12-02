@@ -72,4 +72,13 @@ namespace SDLFramework {
 
 		mGraphics->DrawTexture(mTex, mClipped ? &mSourceRect : nullptr, &mDestinationRect, Rotation(World));
 	}
+	void Texture::RenderEx(Vector2 position, float rotation, Vector2 scale) {
+		SDL_Rect renderRect;
+		renderRect.w = static_cast<int>(mWidth * scale.x);
+		renderRect.h = static_cast<int>(mHeight * scale.y);
+		renderRect.x = static_cast<int>(position.x - renderRect.w * 0.5f);
+		renderRect.y = static_cast<int>(position.y - renderRect.h * 0.5f);
+
+		SDL_RenderCopyEx(Graphics::Instance()->GetRenderer(), mTex, nullptr, &renderRect, rotation, nullptr, SDL_FLIP_NONE);
+	}
 }
