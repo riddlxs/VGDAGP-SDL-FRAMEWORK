@@ -44,12 +44,12 @@ namespace SDLFramework {
 	void PhysicsManager::UnregisterEntity(unsigned long id) {
 		bool found = false;
 
-		// Loop through all of our collision layers
+		//Loop through all of our collision layers
 		for (int i = 0; i < static_cast<unsigned int>(CollisionLayers::MaxLayers) && !found; i++) {
-			// Loop through all of the OBJECTS in a specific collision layer
+			//Loop through all of the OBJECTS in a specific collision layer
 			for (int j = 0; j < mCollisionLayers[i].size() && !found; j++) {
-				// i == the layer we are currently looking at
-				// j == the PhysEntity* we are currently looking at
+				//i == the layer we are currently looking at
+				//j == the PhysEntity* we are currently looking at
 				if (mCollisionLayers[i][j]->GetId() == id) {
 					mCollisionLayers[i].erase(mCollisionLayers[i].begin() + j);
 					found = true;
@@ -57,7 +57,6 @@ namespace SDLFramework {
 			}
 		}
 	}
-
 
 	void PhysicsManager::Update() {
 		//Iteration 1 - Looking through all of our layers
