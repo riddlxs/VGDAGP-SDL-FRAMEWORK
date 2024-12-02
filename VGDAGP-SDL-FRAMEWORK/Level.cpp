@@ -10,6 +10,7 @@ Level::Level(int stage, PlaySideBar* sideBar, Player* player1, Player* player2) 
 	mSideBar->SetLevel(stage);
 	mBackgroundStars = BackgroundStars::Instance();
 
+
 	mStage = stage;
 	mStageStarted = false;
 	mLabelTimer = 0.0f;
@@ -48,6 +49,7 @@ Level::Level(int stage, PlaySideBar* sideBar, Player* player1, Player* player2) 
 	mGameOverLabelOnScreen = 1.0f;
 
 	mCurrentState = Running;
+
 }
 
 
