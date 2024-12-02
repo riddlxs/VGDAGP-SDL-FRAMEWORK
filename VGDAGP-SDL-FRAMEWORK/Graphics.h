@@ -15,6 +15,7 @@ namespace SDLFramework {
 		static Graphics* Instance();
 		//Handle releasing (uninitializing) memory. ONLY HANDLES OUR WINDOW AND RENDERER
 		static void Release();
+		SDL_Renderer* GetRenderer();
 		static bool Initialized();
 
 		SDL_Texture* LoadTexture(std::string path);

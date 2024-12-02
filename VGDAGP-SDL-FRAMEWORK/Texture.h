@@ -16,6 +16,7 @@ namespace SDLFramework {
 		void SetSourceRect(SDL_Rect* sourceRect);
 
 		void Render() override;
+		void RenderEx(Vector2 position, float rotation, Vector2 scale = Vec2_One);
 
 	protected:
 		SDL_Texture* mTex;
@@ -27,5 +28,6 @@ namespace SDLFramework {
 		bool mClipped;
 		SDL_Rect mSourceRect;
 		SDL_Rect mDestinationRect;
+
 	};
 }

@@ -93,6 +93,12 @@
     <ClCompile Include="ScreenManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Header Files\Galaga_CPP</Filter>
+    </ClCompile>
+    <ClCompile Include="Level.cpp">
+      <Filter>Header Files\Galaga_CPP</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AssetManager.h">
@@ -171,6 +177,12 @@
       <Filter>Header Files\Galaga_H</Filter>
     </ClInclude>
     <ClInclude Include="ScreenManager.h">
+      <Filter>Header Files\Galaga_H</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Header Files\Galaga_H</Filter>
+    </ClInclude>
+    <ClInclude Include="Vec2.h">
       <Filter>Header Files\Galaga_H</Filter>
     </ClInclude>
   </ItemGroup>

@@ -25,6 +25,10 @@ namespace SDLFramework {
 		sInitialized = false;
 	}
 
+	SDL_Renderer* Graphics::GetRenderer() {
+		return mRenderer;
+	}
+
 	bool Graphics::Initialized() {
 		return sInitialized;
 	}

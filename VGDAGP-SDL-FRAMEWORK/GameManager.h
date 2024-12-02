@@ -10,6 +10,9 @@ namespace SDLFramework {
 		static GameManager* Instance();
 		static void Release();
 
+		PhysEntity* GetFriendlyEntity(); 
+
+
 		GameManager();
 		~GameManager();
 
@@ -21,6 +24,7 @@ namespace SDLFramework {
 		void Run();
 
 	private:
+		PhysEntity* mFriendlyEntity;
 		const int FRAME_RATE = 60;
 		//How we are creating this as a Singleton
 		static GameManager* sInstance;
