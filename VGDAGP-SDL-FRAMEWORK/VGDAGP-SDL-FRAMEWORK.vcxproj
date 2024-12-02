@@ -206,6 +206,7 @@ xcopy "$(ProjectDir)\Assets\*" "$(OutDir)Assets\" /y /s</Command>
     <ClInclude Include="StartScreen.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Timer.h" />
+    <ClInclude Include="Vec2.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

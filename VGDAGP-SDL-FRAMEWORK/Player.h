@@ -51,6 +51,9 @@ private:
     float mMoveSpeed;
     Vector2 mMoveBounds;
 
+    float mScaleX;  // Horizontal scale factor
+    float mScaleY;  // Vertical scale factor
+
     void HandleMovement();
     bool isPlayer1;  // Flag to indicate if this is Player 1
 };
