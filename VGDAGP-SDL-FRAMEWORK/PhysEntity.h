@@ -7,6 +7,7 @@ namespace SDLFramework {
 	class PhysEntity : public GameEntity {
 	public:
 		PhysEntity();
+		PhysEntity(float x, float y, float width, float height);
 		virtual ~PhysEntity();
 
 		unsigned long GetId();

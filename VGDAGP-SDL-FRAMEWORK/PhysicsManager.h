@@ -8,18 +8,18 @@ namespace SDLFramework {
     public:
         enum class CollisionLayers {
             Friendly, // the 4 physics layers
-            FriendlyProjectile,
-            Hostile,
-            HostileProjectile,
+            FriendlyProjectile, // 2
+            Hostile, // 3
+            HostileProjectile, // 4
             MaxLayers
         };
 
         enum class CollisionFlags {
             None = 0x00,
-            Friendly = 0x01,
-            FriendlyProjectile = 0x02,
-            Hostile = 0x04,
-            HostileProjectile = 0x08,
+            Friendly = 0x01, // 1
+            FriendlyProjectile = 0x02, // 2
+            Hostile = 0x04, // 3
+            HostileProjectile = 0x08, // 4
         };
 
         // Singleton pattern for PhysicsManager
