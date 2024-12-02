@@ -4,51 +4,58 @@
 
 namespace SDLFramework {
 
-	class PhysicsManager {
-	public:
-		enum class CollisionLayers {
-			Friendly,
-			FriendlyProjectile,
-			Hostile,
-			HostileProjectile,
-			MaxLayers
-		};
+    class PhysicsManager {
+    public:
+        enum class CollisionLayers {
+            Friendly, // the 4 physics layers
+            FriendlyProjectile,
+            Hostile,
+            HostileProjectile,
+            MaxLayers
+        };
 
-		enum class CollisionFlags {
-			None = 0x00,
-			Friendly = 0x01,
-			FriendlyProjectile = 0x02,
-			//Some other friendly layer could go here
-			Hostile = 0x04,
-			HostileProjectile = 0x08
-		};
+        enum class CollisionFlags {
+            None = 0x00,
+            Friendly = 0x01,
+            FriendlyProjectile = 0x02,
+            Hostile = 0x04,
+            HostileProjectile = 0x08,
+        };
 
-		static PhysicsManager* Instance();
-		static void Release();
+        // Singleton pattern for PhysicsManager
+        static PhysicsManager* Instance();
+        static void Release();
 
-		unsigned long RegisterEntity(PhysEntity* entity, CollisionLayers layer);
-		void UnregisterEntity(unsigned long id);
+        // Methods to register entities, unregister, set collision masks, and update physics
+        unsigned long RegisterEntity(PhysEntity* entity, CollisionLayers layer);
+        void UnregisterEntity(unsigned long id);
 
-		void SetLayerCollisionMask(CollisionLayers layer, CollisionFlags flags);
+        // Method to set collision masks for layers
+        void SetLayerCollisionMask(CollisionLayers layer, CollisionFlags flags);
 
-		void Update();
+        // Update method to check collisions
+        void Update();
 
-	private:
-		PhysicsManager();
-		~PhysicsManager();
+    private:
+        PhysicsManager();
+        ~PhysicsManager();
 
-		static PhysicsManager* sInstance;
-		std::vector<PhysEntity*> mCollisionLayers[static_cast<unsigned int>(CollisionLayers::MaxLayers)];
-		std::bitset<static_cast<unsigned int>(CollisionLayers::MaxLayers)> mLayerMasks[static_cast<unsigned int>(CollisionLayers::MaxLayers)];
+       
+        static PhysicsManager* sInstance;
 
-		unsigned long mLastID;
-	};
+      
+        std::vector<PhysEntity*> mCollisionLayers[static_cast<unsigned int>(CollisionLayers::MaxLayers)];
+        std::bitset<static_cast<unsigned int>(CollisionLayers::MaxLayers)> mLayerMasks[static_cast<unsigned int>(CollisionLayers::MaxLayers)];
 
-	inline PhysicsManager::CollisionFlags operator|(PhysicsManager::CollisionFlags a, PhysicsManager::CollisionFlags b) {
-		return static_cast<PhysicsManager::CollisionFlags>(static_cast<unsigned int>(a) | static_cast<unsigned int>(b));
-	}
+        unsigned long mLastID;
+    };
 
-	inline PhysicsManager::CollisionFlags operator&(PhysicsManager::CollisionFlags a, PhysicsManager::CollisionFlags b) {
-		return static_cast<PhysicsManager::CollisionFlags>(static_cast<unsigned int>(a) & static_cast<unsigned int>(b));
-	}
+ 
+    inline PhysicsManager::CollisionFlags operator|(PhysicsManager::CollisionFlags a, PhysicsManager::CollisionFlags b) {
+        return static_cast<PhysicsManager::CollisionFlags>(static_cast<unsigned int>(a) | static_cast<unsigned int>(b));
+    }
+
+    inline PhysicsManager::CollisionFlags operator&(PhysicsManager::CollisionFlags a, PhysicsManager::CollisionFlags b) {
+        return static_cast<PhysicsManager::CollisionFlags>(static_cast<unsigned int>(a) & static_cast<unsigned int>(b));
+    }
 }
